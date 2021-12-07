@@ -1,14 +1,15 @@
 package com.programming_distributed_systems_project;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
  * This class represents all messages sent from client to server
  */
 public class Request implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private String request;
-    private String operation;
+    private final String operation;
     private String username;
     private String password;
     private Character character;
@@ -18,11 +19,12 @@ public class Request implements Serializable {
     /**
      * This request is only created when the user logs in or signs up
      * Login request constructor
+     * @param request
      * @param username
      * @param password
      * @param operation
      */
-    public Request(String username, String password, String operation) {
+    public Request(String request, String username, String password, String operation) {
         super();
         this.operation = operation;
         this.username = username;
@@ -71,4 +73,3 @@ public class Request implements Serializable {
     }
     public int getUserId() { return userId; }
 }
-

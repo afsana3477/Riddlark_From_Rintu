@@ -64,7 +64,7 @@ public class ClientInputThread implements Runnable {
                     }
                     case "chosen character": {
                         Team team = (Team) reply.getReplyData();
-    //                    System.out.println(team.printCharacterSelection());
+                        //                    System.out.println(team.printCharacterSelection());
                         break;
                     }
                     case "end game": {

@@ -39,16 +39,16 @@ public class UserInterface {
                         break endInput;
                     }
                 }
-                    int teamSelection = new Integer(scanner.readLine());
-                    if(teamSelection > ((ArrayList) data).size()) {
-                        throw new NumberFormatException();
-                    } else {
-                        Request request = new Request((int) ((ArrayList) data).get(teamSelection - 1), user.getUserId(), "join team");
-                        ClientOutputThread outputThread = new ClientOutputThread(connection, request);
-                        Thread thread = new Thread(outputThread);
-                        thread.start();
-                        break;
-                    }
+                int teamSelection = new Integer(scanner.readLine());
+                if(teamSelection > ((ArrayList) data).size()) {
+                    throw new NumberFormatException();
+                } else {
+                    com.programming_distributed_systems_project.Request request = new com.programming_distributed_systems_project.Request((int) ((ArrayList) data).get(teamSelection - 1), user.getUserId(), "join team");
+                    ClientOutputThread outputThread = new ClientOutputThread(connection, request);
+                    Thread thread = new Thread(outputThread);
+                    thread.start();
+                    break;
+                }
             }
         } catch(NumberFormatException | IOException e) {
             printUnknownCommand();
@@ -85,19 +85,19 @@ public class UserInterface {
                         break endInput;
                     }
                 }
-                    int charSelection = new Integer(scanner.readLine());
-                    if(charSelection >(characters.size())){
-                        throw new NumberFormatException();
-                    }else {
-                        Request request = new Request(characters.get(charSelection - 1), "choose character");
-                        ClientOutputThread outputThread = new ClientOutputThread(connection,request);
-                        Thread thread = new Thread(outputThread);
-                        thread.start();
-                        break;
-                    }
+                int charSelection = new Integer(scanner.readLine());
+                if(charSelection >(characters.size())){
+                    throw new NumberFormatException();
+                }else {
+                    com.programming_distributed_systems_project.Request request = new com.programming_distributed_systems_project.Request(characters.get(charSelection - 1), "choose character");
+                    ClientOutputThread outputThread = new ClientOutputThread(connection,request);
+                    Thread thread = new Thread(outputThread);
+                    thread.start();
+                    break;
+                }
             }
         } catch (NumberFormatException | IOException e){
-                printUnknownCommand();
+            printUnknownCommand();
         }
     }
 
@@ -161,6 +161,7 @@ public class UserInterface {
      * Show an info message on what the user should do if he wants to quit the application
      */
     public static void printExitInfo() {
+
         System.out.println("INFO: Enter `exit` to quit");
     }
 

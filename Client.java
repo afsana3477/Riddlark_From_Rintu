@@ -15,14 +15,14 @@ public class Client {
     }
 
     /**
-     * Logs in the client
+     * Client login
      */
     public void login() {
         try {
-            ArrayList<String> user = getLoginOrRegisterDetails();
-            Request loginRequest = new Request(user.get(0),user.get(1), "login");
-            ClientOutputThread clientOutputThread = new ClientOutputThread(connection, loginRequest);
-            Thread thread = new Thread(clientOutputThread);
+            ArrayList<String> user = Login_RegisterInfo();
+            Call loginCall = new Call(user.get(0),user.get(1), "login");
+            Client_Output Client_Output = new Client_Output(connection, loginCall);
+            Thread thread = new Thread(Client_Output);
             thread.start();
         } catch (IOException e) {
 //            e.printStackTrace();
@@ -30,14 +30,14 @@ public class Client {
     }
 
     /**
-     * Signs up the client
+     * Client register
      */
     public void register() {
         try {
-            ArrayList<String> user = getLoginOrRegisterDetails();
-            Request registerRequest = new Request(user.get(0),user.get(1), "register");
-            ClientOutputThread clientOutputThread = new ClientOutputThread(connection, registerRequest);
-            Thread thread = new Thread(clientOutputThread);
+            ArrayList<String> user = Login_RegisterInfo();
+            Call registerCall = new Call(user.get(0),user.get(1), "register");
+            Client_Output client_Output = new Client_Output(connection, registerCall);
+            Thread thread = new Thread(client_Output);
             thread.start();
         } catch (IOException e) {
 //            e.printStackTrace();
@@ -45,33 +45,33 @@ public class Client {
     }
 
     /**
-     * Get user details for login or register
+     * Get user information for login or register
      * @return ArrayList<String> of user details
-     */
-    public ArrayList<String> getLoginOrRegisterDetails() throws IOException{
+     * */
+    public ArrayList<String> Login_RegisterInfo() throws IOException{
         String username;
         String password;
         ArrayList<String> user = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         while (!Thread.interrupted()) {
-            System.out.println("Enter your username: ");
+            System.out.println("Enter username: ");
             username = scanner.next();
-                if (isValidUserNameOrPassword(username)) {
-                    user.add(username);
-                    break;
-                } else {
-                    printInvalidUsernameOrPassword("username");
-                }
+            if (ValidUserNameOrPassword(username)) {
+                user.add(username);
+                break;
+            } else {
+                InvalidUsernameOrPassword("username");
+            }
         }
 
         while(!Thread.interrupted()) {
-            System.out.println("Enter your password: ");
+            System.out.println("Enter password: ");
             password = scanner.next();
-            if (isValidUserNameOrPassword(password)) {
+            if (ValidUserNameOrPassword(password)) {
                 user.add(password);
                 break;
             } else {
-                printInvalidUsernameOrPassword("password");
+                InvalidUsernameOrPassword("password");
             }
         }
         return user;
@@ -81,21 +81,18 @@ public class Client {
      * Informs the user of an invalid command entered
      * @param argument command the user entered
      */
-    public static void printInvalidUsernameOrPassword(String argument) {
-        System.out.println(argument + " must be at least 4 characters long");
+    public static void InvalidUsernameOrPassword(String argument) {
+        System.out.println(argument + " must have at least 6 characters ");
     }
 
     /**
-     * Checks if the user entered a good username or password
-     * @param argument the value the user entered
-     * @return boolean, true if valid and false is if invalid
+     * Checks if the user entered an available username or password
      */
-    public static boolean isValidUserNameOrPassword(String argument) {
-        if(argument.length() >= 4) {
+    public static boolean ValidUserNameOrPassword(String argument) {
+        if(argument.length() >= 6) {
             return true;
         } else {
             return false;
         }
     }
 }
-
